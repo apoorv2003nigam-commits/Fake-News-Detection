@@ -6,9 +6,11 @@ app = Flask(__name__)
 model = pickle.load(open('model.pkl', 'rb'))
 vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
 
+# ✅ THIS IS MISSING / WRONG IN YOUR CASE
 @app.route('/')
 def home():
     return render_template('index.html')
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -21,6 +23,8 @@ def predict():
 
     return render_template('index.html', prediction_text=result)
 
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=10000)
-    
+    import os
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)
